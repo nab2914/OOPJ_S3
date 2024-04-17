@@ -1,0 +1,41 @@
+package palnum;
+
+class palindrome{
+	 int n,m;
+	void checkpal() 
+	{
+		for(int i=n;i<=m;i++) 
+		{
+			int num=i,revnum=0;
+			while(num>0) {
+			int rem=num%10;
+			 revnum=revnum*10+rem;
+			 num/=10;
+			}
+			if(revnum==i) {
+				System.out.println(i);
+			}
+		}
+	}
+	public palindrome(int n,int m) {
+		this.n=n;
+		this.m=m;
+	}
+}
+public class pl {
+
+	public static void main(String[] args) {
+		try {
+		int a=Integer.parseInt(args[0]);
+		int b=Integer.parseInt(args[1]);
+		palindrome pal=new palindrome(a,b);
+		
+		System.out.println("The Palindrome numbers btw the numbers are:");
+		pal.checkpal();
+		} 
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+}

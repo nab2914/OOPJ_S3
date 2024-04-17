@@ -1,0 +1,159 @@
+package palnum;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+
+interface DataStructure{
+	void insert();
+	void delete();
+	void display();
+}
+class Stack implements DataStructure{
+
+	int stack[]=new int[10];
+	int size=5;
+	int top=-1;
+	public void insert() {
+		if (top==size-1) {
+			System.out.println("Stack overflow");return;}
+		try {
+		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("Enter the data for insertion");
+		stack[++top]=Integer.parseInt(br.readLine());
+		//top++;
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void delete() {
+		if(top<=-1) {
+			System.out.println("STack Underflow");return;
+		}
+		int item=stack[top];
+		top--;
+		System.out.println("Removed element is :"+item);
+	}
+
+	@Override
+	public void display() {
+		if(top<0) {
+			System.out.println("Stack is empty");return;}
+			
+			for(int i=top;i>=0;i--)
+			System.out.println(stack[i]);
+		
+	}
+	
+}
+class Queue implements DataStructure{
+
+	int queue[]=new int[10];
+	int size=10;
+	int front=-1,rear=-1;
+	public void insert() {
+		if(rear==size-1) {
+			System.out.println("Queue overflow");return;
+		}
+		else {
+			if(front==-1) {
+				front=0;
+			}
+			try {
+				BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+				System.out.println("Enter the data for insertion");
+				queue[++rear]=Integer.parseInt(br.readLine());
+				
+				}
+				catch(IOException e) {
+					e.printStackTrace();
+				}
+		}
+	}
+
+	@Override
+	public void delete() {
+		if(front==-1||front>rear) {
+			System.out.println("Queue underflow");return;
+		}
+		else {
+			int item=queue[front];
+			System.out.println("Element deleted from the queue :"+item);
+			front++;
+		}
+	}
+
+	@Override
+	public void display() {
+		if(front==-1) {
+			System.out.println("Queue is empty");return;}
+		else {
+			for(int i=front;i<=rear;i++) {
+				System.out.println(queue[i]);
+			}
+		}
+	}
+	
+}
+public class intrfc {
+
+	public static void main(String[] args) {
+		
+		boolean val=true;
+		while(val)
+		{
+			try {
+				BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+				System.out.println("Enter :\n1 for Stack\n2 for Queue\n3 for terminating");
+				int choice=Integer.parseInt(br.readLine());
+		switch(choice) 
+		{
+		case 1:Stack st=new Stack();boolean vals=true;
+			while(vals) 
+			{
+				System.out.println("Enter 1 for Insertion\n2 for Deletion\n3 for Displaying elements\n4 for terminaitng");
+				int ch=Integer.parseInt(br.readLine());
+				
+				switch(ch) {
+				case 1:st.insert();
+					   break;
+				case 2:st.delete();
+					   break;
+				case 3:st.display();
+				       break;
+				case 4:vals=false;
+					   break;
+				default:System.out.println("Invalid Entry");break;
+				
+				}
+			}break;
+		case 2:Queue qu=new Queue();boolean valq=true;
+			while(valq) {
+				System.out.println("Enter 1 for Insertion\n2 for Deletion\n3 for Displaying elements\n4 for terminaitng");
+				int ch=Integer.parseInt(br.readLine());
+				
+				switch(ch) {
+				case 1:qu.insert();
+					   break;
+				case 2:qu.delete();
+					   break;
+				case 3:qu.display();
+				       break;
+				case 4:valq=false;
+					   break;
+				default:System.out.println("Invalid Entry");break;
+				
+				}
+			}break;
+		case 3:val=false;
+		       break;
+		default:System.out.println("Invalid Entry");break;
+			
+		}
+		}catch(IOException e) {e.printStackTrace();}
+	}
+	}
+}

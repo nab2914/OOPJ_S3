@@ -1,0 +1,100 @@
+package bhl;
+import java.util.Random;
+
+class SharedData {
+    public static int RandomInt;
+    public static boolean isgenerated = false;
+    public static final SharedData lock = new SharedData();
+}
+
+class Random1 extends Thread {
+    public void run() {
+        Random Ran = new Random();
+        for (int i = 0; i < 5; i++) 
+        {
+            synchronized (SharedData.lock)
+            {
+                SharedData.RandomInt = Ran.nextInt(100);
+                System.out.println("Generated Random Integer : " + SharedData.RandomInt);
+                SharedData.isgenerated = true;
+                SharedData.lock.notifyAll();
+            
+        try {
+            Thread.sleep(1000);
+            SharedData.lock.wait();
+
+		} catch (Exception e) {
+				e.printStackTrace();
+		}
+            }
+        }
+    }
+}
+
+class Square extends Thread {
+    public void run() {
+        for (int i = 0; i < 5; i++) 
+        synchronized (SharedData.lock) 
+        {
+            while (!SharedData.isgenerated) {
+                try {
+                    SharedData.lock.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        
+        if(SharedData.RandomInt%2==0) 
+        {
+        System.out.println("Square of the Number Is : " + (SharedData.RandomInt * SharedData.RandomInt));
+        SharedData.isgenerated=false;
+        SharedData.lock.notifyAll();
+        }
+        }
+
+    }
+}
+
+class Cube extends Thread {
+    public void run() {
+        for (int i = 0; i < 5; i++) 
+        synchronized (SharedData.lock) 
+        {
+            while (!SharedData.isgenerated) 
+            {
+                try {
+                    SharedData.lock.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        if(SharedData.RandomInt%2!=0) 
+        {
+        System.out.println("Cube of the Number Is : " + SharedData.RandomInt * SharedData.RandomInt * SharedData.RandomInt);
+        SharedData.isgenerated=false;
+        SharedData.lock.notifyAll();
+        }
+        }
+    }
+    
+}
+
+public class ProducerConsumer {
+
+    public static void main(String[] args) {
+
+        Random1 r1 = new Random1();
+        Square s = new Square();
+        Cube c = new Cube();
+        r1.start();
+        s.start();
+        c.start();
+        try {
+            r1.join();
+            s.join();
+            c.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}

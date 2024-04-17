@@ -1,0 +1,27 @@
+package palnum;
+
+class Singleinstance{
+	private static String data;
+	private static Singleinstance Inst;
+	private Singleinstance(String data) 
+	
+	{
+		this.data=data;
+	}
+	public static Singleinstance Getinstance(String data) {
+		if(Inst==null) {
+			Inst=new Singleinstance(data);
+		}
+		return Inst;
+	}
+	public static void print(){
+		System.out.println(data);
+	}
+}
+public class singleton {
+ public static void main(String[] args) {
+	// Singleinstance single=new Singleinstance("Nanditha");
+	Singleinstance.Getinstance("nandu");
+	Singleinstance.print();
+ }
+}

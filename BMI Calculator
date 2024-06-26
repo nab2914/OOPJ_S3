@@ -1,0 +1,95 @@
+package hello;
+import javax.swing.*;
+
+import java.awt.Color;
+import java.awt.event.*;
+import java.text.DecimalFormat;
+public class BMI_Calculator extends JFrame implements ActionListener{
+	JFrame frame;
+	JLabel weight;
+	JLabel height;
+	JTextField area1;
+	JTextField area2;
+	JTextField area3;
+	/*int height1,weight1;
+	int bmi=0;*/
+	JButton equal;
+	boolean op;
+
+	public BMI_Calculator() 
+	{
+		
+
+		
+		frame=new JFrame("Welcome");
+		frame.setSize(400, 400);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLayout(null);
+		frame.setVisible(true);
+		
+		weight=new JLabel("Your Weight(Kg)");
+		weight.setBounds(10, 10, 100, 100);
+		weight.setVisible(true);
+		frame.add(weight);
+		
+		height=new JLabel("Your height(cm)");
+		height.setBounds(10, 40, 100, 100);
+		height.setVisible(true);
+		frame.add(height);
+		
+		area1=new JTextField();
+		area1.setBounds(120,30,100,40);
+		area1.setVisible(true);
+		area1.setBackground(Color.GRAY);
+		area1.addActionListener(this);
+		frame.add(area1);
+		
+		area2=new JTextField();
+		area2.setBounds(120,80,100,40);
+		area2.setVisible(true);
+		area2.setBackground(Color.GRAY);
+		area2.addActionListener(this);
+		frame.add(area2);
+		
+		equal=new JButton("Your BMI:");
+		equal.setBounds(10,150,100,40);
+		equal.setVisible(true);
+		equal.addActionListener(this);
+		frame.add(equal);
+		
+		area3=new JTextField();
+		area3.setBounds(120,150,100,40);
+		area3.setVisible(true);
+		area3.addActionListener(this);
+		frame.add(area3);
+		
+		
+	}
+	
+	public static void main(String[] args) {
+		new BMI_Calculator();
+	}
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==equal) {
+			//String value=area1.getText();
+			Double weight1=Double.parseDouble(area1.getText());
+		
+			//String value1=area2.getText();
+			Double height1=Double.parseDouble(area2.getText());
+		
+			
+			
+			Double bmi=(weight1/(height1 * height1))*10000;
+			DecimalFormat df = new DecimalFormat("#.##");
+	        String formattedValue = df.format(bmi);
+			area3.setText(formattedValue +"");
+			
+		
+
+			area1.setText(" ");
+			area2.setText(" ");
+			
+		}
+		
+	}
+}

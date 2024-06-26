@@ -1,0 +1,82 @@
+class share
+{
+	
+}
+
+ class evennumber extends Thread
+ {
+	 private share sharedobj;
+	   public void run() 
+	  {
+		   synchronized(sharedobj) {
+		for(int i=0;i<=10;i+=2) 
+		{
+			System.out.println(i);
+			sharedobj.notify();
+			try 
+			{
+				sharedobj.wait();
+				Thread.sleep(1000);
+			}
+			catch(InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+		}}
+
+	}
+	  public evennumber(share s) 
+	  {
+		  this.sharedobj=s;
+	  }
+}
+class oddnumber extends Thread
+{
+	private share sharedobj;
+	  public void run() 
+	 {
+		  synchronized(sharedobj)
+		  {
+		    for(int i=1;i<10;i+=2)
+		    {
+			      System.out.println(i);
+			      sharedobj.notify();
+		
+		          try 
+		          {
+		        	  sharedobj.wait();
+						Thread.sleep(1000);
+
+	    	      }
+	    	      catch(InterruptedException e) 
+		          {
+		        	e.printStackTrace();
+		          }
+		     }
+		    }
+	}
+	 public oddnumber(share s) 
+	 {
+		  this.sharedobj=s;
+	 }
+}
+public class multithread {
+
+	 public static void main(String[] args) {
+		 share sh=new share();
+		
+		evennumber ev=new evennumber(sh);
+		oddnumber odd=new oddnumber(sh);
+		ev.start();
+		odd.start();
+		try 
+		{
+			ev.join();
+			odd.join();
+		}catch (Exception e) 
+		{
+			System.out.println("Exception caught");		
+		}
+	}
+
+}
